@@ -1,7 +1,7 @@
 
 
 
-
+<img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/why.jpg" alt="TweeToxicity" width="800"/><br>
 
 ## What is it?
 **HOW TO WEBSCRAP** is a joint repository of the three musketeers whose goal is just one: **Avoid anti-bot websites**
