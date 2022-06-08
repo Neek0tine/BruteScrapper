@@ -64,4 +64,4 @@ Pull requests are welcome. For major changes, how-to, and in-depth explanation, 
 ## License
 ![PyPI - License](https://img.shields.io/pypi/l/PyCl)
 <br>
-This project is licensed under MIT License - see the [LICENSE](https://github.com/Neek0tine/Tweetoxicity/blob/main/LICENSE) file for details
+This project is licensed under MIT License - see the [LICENSE](https://github.com/Neek0tine/BruteScrapper/blob/main/LICENSE) file for details
