@@ -61,21 +61,20 @@ class BrutescrapTimeoutException(BrutescrapException):
 # Functions
 
 class get:
-    def __init__(self, query, browser, new_instance):
+    def __init__(self, query, browser, new_instance=False):
         self.new_instance = new_instance
         self.browserOpened = checkIfProcessRunning(browser)
         self.query = query
         self.browser = browser
         self.content = ''
         self.websiteInterval = 3
-        pyautogui.PAUSE = 0.25
+        pag.PAUSE = 0.25
         self.paste = ''
         self.block = windll.user32.BlockInput(True)
 
         pag.hotkey('win', 'r')
         pag.write(browser)
         pag.press("enter")
-        sleep(self.processInterval)
         pag.write(query)
         pag.press('enter')
         sleep(self.websiteInterval)
@@ -84,7 +83,6 @@ class get:
     def page_source(self):
         self.block = windll.user32.BlockInput(True)
         pag.hotkey("ctrl", "u")
-        sleep(self.processInterval)
         pag.hotkey("ctrl", "a")
         pag.hotkey("ctrl", "c")
         sleep(self.websiteInterval)
