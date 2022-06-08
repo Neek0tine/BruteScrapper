@@ -14,6 +14,9 @@ Required modules:
     time
 
 """
+# TODO: get() using existing browser
+# TODO: batch_get() more stable
+# TODO: there's shit ton to do, get to work.
 
 __version__ = '0.0.1'
 
