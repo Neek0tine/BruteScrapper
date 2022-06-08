@@ -3,10 +3,10 @@
 
 <img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/why-01.jpg" alt="DaNg" width="800"/><br>
 
-## What is it?
+# What is it?
 **HOW TO WEBSCRAP** is a joint repository of the three musketeers whose goal is just one: **Avoid anti-bot websites**
 
-## Why did I make this?
+# Why did I make this?
 There are three main phases on anti-bot website difficulty. 
 * ### Requests
 The first one is the Requests phase. First, a web scrapper will try to do a requests using a standard requests library or urllib3 for those who are special. This mostly works nicely before 2015.
@@ -20,6 +20,15 @@ However, sites now checks your browser fingerprints too?! What is this?! Why do 
 * ### PyAutoIt - PyAutoGUI 
 Okay, this is the last resort. If you can't control my browser, control my mouse. Move my mouse, press my browser, type the link I want to go, and manually-automatically copies all the info required. I'm not sure if this is a stone age technology
 or an absolute breakthrough of an innovation. This feels like bruteforcing our way in, but anything for those sweet sweet datas amiright?
+
+# Usage
+
+### PIP
+To install using pip, simply type this command:<br>
+`pip install git+https://github.com/Neek0tine/BruteScrapperl.git@main`
+
+### Examples
+
 
 ## End-User License Agreement
 As per the MIT License:

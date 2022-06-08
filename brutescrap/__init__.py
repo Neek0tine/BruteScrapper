@@ -19,9 +19,26 @@ __version__ = '0.0.1'
 
 import pyautogui as pag
 import clipboard as cp
-from bs4 import  BeautifulSoup
+from bs4 import BeautifulSoup
 from ctypes import *
 from time import sleep
+from psutil import NoSuchProcess, AccessDenied, ZombieProcess, process_iter
+
+
+# Checks
+def checkIfProcessRunning(processName):
+    # Check if there is any running process that contains the given name processName.
+    # Iterate over the all the running process
+
+    for proc in process_iter():
+        try:
+            # Check if process name contains the given name string.
+            if processName.lower() in proc.name().lower():
+                return True
+        except (NoSuchProcess, AccessDenied, ZombieProcess):
+            pass
+    return False
+
 
 SCREEN_WIDTH, SCREEN_HEIGHT = pag.size()
 
@@ -44,12 +61,14 @@ class BrutescrapTimeoutException(BrutescrapException):
 # Functions
 
 class get:
-    def __init__(self, query, browser):
+    def __init__(self, query, browser, new_instance):
+        self.new_instance = new_instance
+        self.browserOpened = checkIfProcessRunning(browser)
         self.query = query
         self.browser = browser
         self.content = ''
         self.websiteInterval = 3
-        self.processInterval = 0.25
+        pyautogui.PAUSE = 0.25
         self.paste = ''
         self.block = windll.user32.BlockInput(True)
 
@@ -95,6 +114,32 @@ class get:
 
         return BeautifulSoup(self.paste, "html.parser")
 
+    def quit_window(self):
+        self.block = windll.user32.BlockInput(True)
+        pag.hotkey("alt", "f4")
+        self.block = windll.user32.BlockInput(False)
 
 
-__all__ = ['get', 'close', 'next_tab', 'last_page', 'parse', 'closeLastPage', 'quit_browser']
+def goto(tab):
+    self.block = windll.user32.BlockInput(True)
+    pag.hotkey("ctrl", str(tab))
+    self.block = windll.user32.BlockInput(False)
+
+
+def new_tab():
+    self.block = windll.user32.BlockInput(True)
+    pag.hotkey("ctrl", "t")
+    self.block = windll.user32.BlockInput(False)
+
+
+class batch_get:
+    def __init__(self, array):
+        self.array = array
+
+        for link in self.array:
+            new_tab()
+            pag.write(str(link))
+            pag.press('enter')
+
+
+__all__ = ['get', 'close', 'next_tab', 'last_page', 'parse', 'closeLastPage', 'goto', 'batch_get', 'quit_window']
