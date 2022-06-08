@@ -6,7 +6,6 @@
 # What is it?
 **HOW TO WEBSCRAP** is a joint repository of the three musketeers whose goal is just one: **Avoid anti-bot websites**
 
-# Why did I make this?
 There are three main phases on anti-bot website difficulty. 
 * ### Requests
 The first one is the Requests phase. First, a web scrapper will try to do a requests using a standard requests library or urllib3 for those who are special. This mostly works nicely before 2015.
@@ -20,6 +19,18 @@ However, sites now checks your browser fingerprints too?! What is this?! Why do 
 * ### PyAutoIt - PyAutoGUI 
 Okay, this is the last resort. If you can't control my browser, control my mouse. Move my mouse, press my browser, type the link I want to go, and manually-automatically copies all the info required. I'm not sure if this is a stone age technology
 or an absolute breakthrough of an innovation. This feels like bruteforcing our way in, but anything for those sweet sweet datas amiright?
+
+# Why did I make this?
+You can only annoy someone so much until they snap and decided to create something like this. The idea behind this 
+module is that we're using something similar as AutoHotKey, in this case PyAutoGUI. Then we just made a bunch of sequences
+and arrange them into classes and functions that is similar to requests or urllib class structure for easier use.
+
+Text gathering is done by using clipboard module, since PyTesseract is a heavy library and generally a hassle to use. 
+The text gathered is mostly from page source that has been soup'd or a simple select all texts on the site, I surely am will make
+a function that does exactly like that but in a more controlled way.
+
+"How about nested links?" You ask? Simple. PyAutoGUI has this amazing feature that lets you get a coordinate of an image 
+given that you give PyAutoGUI target image. Target image is gathered easily by using something as simple as snipping tool.
 
 # Usage
 
