@@ -1,12 +1,7 @@
-import brutescrap as bs
+import pandas as pd
+import pyforest
 
-# 'get', 'close', 'next_tab', 'last_page', 'parse', 'closeLastPage', 'goto', 'batch_get', 'quit_window'
-
-c = bs.get("https://steamdb.info/app/275850/info/", "msedge").parse()
-print(type(c))
-# <class 'bs4.BeautifulSoup'>
-
-source = bs.get("https://steamdb.info/app/275850/info/", "msedge").page_source()
-print(type(source))
-# <class 'str'>
-
+df = pd.read_csv("5000 appids.csv")
+df = df.drop(['752', '1'], axis=1)
+df.to_csv("top 5000 most played.csv", index=False)
+# print(df.head())

@@ -5,7 +5,7 @@ A webscrapper utilizing mouse manipulation. Prevention for this kind of webscrap
 is currently non-existant, hence a last resort.
 
 Usage:
-    import brutescrap as bs
+    import brutescrapper as bs
     bs.get("https://example.com")
 
 Required modules:
@@ -19,11 +19,16 @@ Required modules:
 # TODO: there's shit ton to do, get to work.
 
 __version__ = '0.0.1'
+__author__ = "Nick Calvin, Hanif, Rick"
+__credits__ = ["Nick Calvin, Hanif, Rick"]
+__license__ = "MIT"
+__maintainer__ = "Nick Calvin, Fathur S."
+__status__ = "Development"
 
 import pyautogui as pag
 import clipboard as cp
 from bs4 import BeautifulSoup
-from ctypes import *
+from ctypes import WinError
 from time import sleep
 from psutil import NoSuchProcess, AccessDenied, ZombieProcess, process_iter
 
@@ -53,7 +58,7 @@ class BrutescrapException(RuntimeError):
 
 class BrutescrapWindowException(BrutescrapException):
     def __init__(self, message):
-        message += " (%s)" % ctypes.WinError()
+        message += " (%s)" % WinError()
         super(BrutescrapWindowException, self).__init__(message)
 
 
