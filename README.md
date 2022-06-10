@@ -4,21 +4,9 @@
 <img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/1-01.jpg" alt="DaNg" width="800"/><br>
 
 # What is it?
-**HOW TO WEBSCRAP** is a joint repository of the three musketeers whose goal is just one: **Avoid anti-bot websites**
+**BruteScrapper** is a joint repository of four college students whose goal is just one: **be able gather data from websites**. The ability to gather data from online websites are really strict nowadays. Irresponsible webscrappers tend to let their program run unlimitedly which causes a level of traffic comparable to DDoS attack, therefore websites tend to use bot-prevention measures to just deny webscrappers as a whole. Usually, this kind of case is really common and site admin provides APIs and Endpoints in where webscrappers can gather info regulatedly. But in some case where they just block bots and is not planning to give any APIs, scrapprers are stuck with no solution. This module is a solution to exact problem.
 
-There are three main phases on anti-bot website difficulty. 
-* ### Requests
-The first one is the Requests phase. First, a web scrapper will try to do a requests using a standard requests library or urllib3 for those who are special. This mostly works nicely before 2015.
-After 2015 however, the big sites usually just block requests and throw a 400 Error code or just a blank page at us. We forgive those who blocks requests but also gives us an API to use. For those who blocks requests that
-and isn't giving a single endpoint of API, now that's what this repos is for.
-
-* ### Selenium
-The second phase is selenium phase. Back then selenium driver is really powerful. Scrapping with selenium back then is like bringing an 155mm L/39 calibre M777 howitzer to a pillow fight. An absolute overkill of a weapon.
-However, sites now checks your browser fingerprints too?! What is this?! Why do you really oppose us? What did we do wrong? (Me personally did not send 10000 requests per second, but for those who did is probably at fault here)
-
-* ### PyAutoIt - PyAutoGUI 
-Okay, this is the last resort. If you can't control my browser, control my mouse. Move my mouse, press my browser, type the link I want to go, and manually-automatically copies all the info required. I'm not sure if this is a stone age technology
-or an absolute breakthrough of an innovation. This feels like bruteforcing our way in, but anything for those sweet sweet datas amiright?
+While this module sounds selfish and inconsiderate, this method ensures the livelihood of the website scrapped for the speed of this module is severely reduced because of the natural limitations of peripheral manipulation. This module is more of a browser automation and less of a tool that specializes in web browsing such as `selenium` or tool that requests data such as `urllib` or `requests`
 
 # Why did I make this?
 You can only annoy someone so much until they snap and decided to create something like this. The idea behind this 
