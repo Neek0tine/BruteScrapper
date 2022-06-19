@@ -25,7 +25,6 @@ import logging
 # from time import sleep
 # from ctypes import wintypes
 # from pywinauto import findwindows
-# from pyperclip import copy, paste
 # from bs4 import BeautifulSoup
 
 
@@ -178,3 +177,49 @@ class Scrapper:
                     logging.critical('Could not find any browser. Contact administrator.')
                     exceptions_handler.BrutescrapException('Could not find Microsoft Edge. Contact administrator.')
                     exit(1)
+
+    def get(self, query):
+        """
+        A get function similar to requests' get or selenium's. Returns HTMl source
+        taken from page source of target websites
+
+        :param query: link
+        :return:
+        """
+
+        self.run_browser()
+        logging.debug(f"Going to {query}")
+
+        from pyperclip import copy, paste
+        from time import sleep
+
+        _wrapper = self.browser.window(title="App bar", control_type="ToolBar")
+        logging.debug(f"Got addressbar")
+        _addressBar = _wrapper.descendants(control_type='Edit')[0]
+        logging.debug(f"Editing browser's addressbar {query}")
+        _mainPage = self.browser.window(title="Microsoft Edge")
+        logging.debug(f"Got browser's main handle")
+
+        _mainPage.type_keys("^t")
+        logging.debug(f"Sending 'CTRL+T' to browser")
+
+        _addressBar.set_text(query).type_keys('{ENTER}')
+        logging.debug(f"Replaced addressbar with query and entering.")
+        sleep(4.75)
+
+        _mainPage.type_keys("^u")
+        logging.debug(f"Sending 'CTRL+U' to browser")
+        sleep(1)
+
+        _mainPage.type_keys("^a")
+        logging.debug(f"Sending 'CTRL+A' to browser")
+        sleep(0.25)
+
+        _mainPage.type_keys("^c")
+        logging.debug(f"Sending 'CTRL+C' to browser")
+
+        _mainPage.type_keys("^w^w")
+
+        _content = paste()
+        self.browser.minimize()
+        return _content
