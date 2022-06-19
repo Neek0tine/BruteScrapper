@@ -1,7 +1,7 @@
 
 
 
-<img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/1-01.jpg" alt="DaNg" width="800"/><br>
+<img src="https://github.com/Neek0tine/Neek0tine/blob/main/stuff/bsbanner.jpg" alt="DaNg" width="800"/><br>
 
 # What is it?
 **BruteScrapper** is a joint repository of four college students whose goal is just one: **be able gather data from websites**. The ability to gather data from online websites are really strict nowadays. Irresponsible webscrappers tend to let their program run unlimitedly which causes a level of traffic comparable to DDoS attack, therefore websites tend to use bot-prevention measures to just deny webscrappers as a whole. Usually, this kind of case is really common and site admin provides APIs and Endpoints in where webscrappers can gather info regulatedly. But in some case where they just block bots and is not planning to give any APIs, scrapprers are stuck with no solution. This module is a solution to exact problem.
@@ -27,7 +27,7 @@ To install using pip, simply type this command:<br>
 `pip install git+https://github.com/Neek0tine/BruteScrapperl.git@main`
 
 ### Examples
-<img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/examples 2.png" alt="DaNg" width="800"/><br>
+<img src="https://github.com/Neek0tine/Neek0tine/blob/main/stuff/examplebs.png" alt="DaNg" width="600"/><br>
 
 ## End-User License Agreement
 As per the MIT License:
