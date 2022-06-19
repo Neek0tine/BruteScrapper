@@ -190,7 +190,7 @@ class Scrapper:
         self.run_browser()
         logging.debug(f"Going to {query}")
 
-        from pyperclip import copy, paste
+        from pyperclip import paste
         from time import sleep
 
         _mainPage = self.browser.window(title="Microsoft Edge")
