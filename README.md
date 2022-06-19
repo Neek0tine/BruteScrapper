@@ -27,7 +27,7 @@ To install using pip, simply type this command:<br>
 `pip install git+https://github.com/Neek0tine/BruteScrapperl.git@main`
 
 ### Examples
-<img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/examples.png" alt="DaNg" width="800"/><br>
+<img src="https://github.com/Neek0tine/Scrapper/blob/main/assets/examples 2.png" alt="DaNg" width="800"/><br>
 
 ## End-User License Agreement
 As per the MIT License:
