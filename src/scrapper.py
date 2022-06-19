@@ -193,12 +193,14 @@ class Scrapper:
         from pyperclip import copy, paste
         from time import sleep
 
-        _wrapper = self.browser.window(title="App bar", control_type="ToolBar")
-        logging.debug(f"Got addressbar")
-        _addressBar = _wrapper.descendants(control_type='Edit')[0]
-        logging.debug(f"Editing browser's addressbar {query}")
         _mainPage = self.browser.window(title="Microsoft Edge")
         logging.debug(f"Got browser's main handle")
+
+        _wrapper = self.browser.window(title="App bar", control_type="ToolBar")
+        logging.debug(f"Got addressbar")
+
+        _addressBar = _wrapper.descendants(control_type='Edit')[0]
+        logging.debug(f"Editing browser's addressbar {query}")
 
         _mainPage.type_keys("^t")
         logging.debug(f"Sending 'CTRL+T' to browser")
@@ -213,7 +215,6 @@ class Scrapper:
 
         _mainPage.type_keys("^a")
         logging.debug(f"Sending 'CTRL+A' to browser")
-        sleep(0.25)
 
         _mainPage.type_keys("^c")
         logging.debug(f"Sending 'CTRL+C' to browser")
@@ -221,5 +222,7 @@ class Scrapper:
         _mainPage.type_keys("^w^w")
 
         _content = paste()
+        logging.debug(f"Pasted web page source from clipboard.")
+
         self.browser.minimize()
         return _content
