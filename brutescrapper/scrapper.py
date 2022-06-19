@@ -16,44 +16,165 @@ Required modules:
     bs4
 
 """
-import pywinauto.findwindows
-from psutil import NoSuchProcess, AccessDenied, ZombieProcess, process_iter
+
 from . import exceptions_handler
-from time import sleep
-from ctypes import wintypes
-from pywinauto.application import Application
-from pywinauto.keyboard import send_keys
-from pywinauto import Desktop
+import pywinauto
+import logging
+
+
+# from time import sleep
+# from ctypes import wintypes
+# from pywinauto import findwindows
+# from pyperclip import copy, paste
+# from bs4 import BeautifulSoup
+
+
+def checkIfProcessRunning(processName):
+    from psutil import NoSuchProcess, AccessDenied, ZombieProcess, process_iter
+
+    """
+    Check if there is any running process that contains the given name processName.
+
+    :param processName:
+    :return: boolean
+    """
+
+    for proc in process_iter():
+        try:
+            # Check if process name contains the given name string.
+            if str(processName).lower() in proc.name().lower():
+                return True
+        except (NoSuchProcess, AccessDenied, ZombieProcess):
+            pass
+    return False
 
 
 class Scrapper:
-    def __init__(self, browser):
-        self.browser = browser
-        self.desktop = Desktop(backend='uia')
+    def __init__(self, browser_type='msedge', use_current=True, log='warn',
+                 logging_format='%(levelname)s::%(message)s', timings='fast'):
+
+        from pywinauto.application import Application
+        from pywinauto import Desktop
+        from platform import architecture
+
+        self.timings = timings
+        self.desk = Desktop(backend='uia')
         self.app = Application(backend='uia')
-        self.activeBrowser = self.openBrowser()
+        self.arch = architecture()[0]
+        self.use_current = use_current
+        self.browser_type = browser_type
+        self.browser = ''
 
-    def openBrowser(self):
-        if self.isBrowserRunning:
-            return self.app.connect(title_re=".*Microsoft​ Edge.*", timeout=10, found_index=0).top_window()
-        else:
-            self.app.start(f'{self.browser}.exe')
-            return self.app.connect(title_re=".*Microsoft​ Edge.*", timeout=10, found_index=0).top_window()
+        if str(log).lower() == 'crit' or str(log).lower() == 'critical':
+            logging.basicConfig(level=logging.CRITICAL, format=logging_format)
+        elif str(log).lower() == 'err' or str(log).lower() == 'error':
+            logging.basicConfig(level=logging.ERROR, format=logging_format)
+        elif str(log).lower() == 'warn' or str(log).lower() == 'warning':
+            logging.basicConfig(level=logging.WARNING, format=logging_format)
+        elif str(log).lower() == 'info' or str(log).lower() == 'information':
+            logging.basicConfig(level=logging.INFO, format=logging_format)
+        elif str(log).lower() == 'debug' or str(log).lower() == 'debugging':
+            logging.basicConfig(level=logging.DEBUG, format=logging_format)
 
-    def isBrowserRunning(self):
-        for proc in process_iter():
+        if self.use_current:
+            logging.debug('use_current set to True. Will try to use available browser.')
+
+        elif not self.use_current:
+            logging.debug('use_current set to False. Will try to launch a new browser instance.')
+
+    def start_edge(self):
+        """
+       Function to start Microsoft Edge
+
+       :return: app
+        """
+        logging.debug("Microsoft Edge launched.")
+        return self.app.start("MicrosoftEdge.exe")
+
+    def start_chrome(self, arch):
+        """
+        Function to start Google Chrome.
+
+        :param arch: 32bit/64bit
+        :return: app
+        """
+        if arch == '32bit':
+            logging.debug("Google Chrome launched.")
+            return self.app.start("C:\\Program Files (x86)\\Google\\Chrome\\Application\\Chrome.exe")
+        elif arch == '64bit':
+            logging.debug("Google Chrome launched.")
+            return self.app.start("C:\\Program Files\\Google\\Chrome\\Application\\Chrome.exe")
+
+    def connect_edge(self):
+        """
+       Initiating pywinauto connection to Microsoft Edge
+       Connection done by searching relevant process called .*Microsoft​ Edge.*
+
+       :return: browser
+       """
+        self.browser = self.app.connect(title_re=".*Microsoft​ Edge.*", timeout=10, found_index=0).top_window()
+        logging.debug("Browser connected.")
+        return
+
+    def connect_chrome(self):
+        """
+        Initiating pywinauto connection to Google Chrome
+        Connection done by searching relevant process called .*Google​ Chrome.*
+
+        :return: browser
+        """
+        self.browser = self.app.connect(title_re=".*Google​ Chrome.*", timeout=10,
+                                        found_index=0).top_window()
+        logging.debug("Browser connected.")
+        return
+
+    def run_browser(self):
+
+        """
+        Function to start browser based on specified parameter,
+        Checks user_current function before starting, False value will start a new browser instance
+        starts Microsoft Edge as default and on error.
+
+        :return: Browser Connection
+        """
+        if self.use_current and checkIfProcessRunning(self.browser_type):
             try:
-                if self.browser.lower() in proc.name().lower():
-                    return True
-            except (NoSuchProcess, AccessDenied, ZombieProcess):
-                pass
-        return False
+                self.connect_edge()
+                self.browser.restore().set_focus().maximize()
+                return
 
-    def get(self, query):
-        self.activeBrowser.type_keys("^t")
-        _wrapper = self.activeBrowser.child_window(title="App bar", control_type="ToolBar")
-        _addressBar = wrapper.descendants(control_type='Edit')[0]
-        _addressBar.set_text(query).type_keys('{ENTER}')
-        return self
+            except pywinauto.timings.TimeoutError:
+                logging.warning("Unable to connect to browser process. Launching new instance.")
+                self.start_edge()
+                self.run_browser()
+                return
 
+        elif self.use_current and not checkIfProcessRunning(self.browser_type):
+            logging.info('use_current set to True and no available browser. Launching new instance')
+            self.start_edge()
+            self.run_browser()
+            return
 
+        elif not self.use_current:
+            if self.browser_type == 'chrome':
+                try:
+                    self.start_chrome(self.arch)
+                    self.connect_chrome()
+                    return
+
+                except pywinauto.application.AppStartError:
+                    logging.warning('Could not find Google Chrome. Using Microsoft Edge instead.')
+                    self.browser_type = 'msedge'
+                    self.run_browser()
+                    self.connect_chrome()
+                    return
+
+            elif self.browser_type == 'msedge' or self.browser_type is None:
+                try:
+                    self.start_edge()
+                    self.connect_edge()
+                    return
+                except pywinauto.application.AppStartError:
+                    logging.critical('Could not find any browser. Contact administrator.')
+                    exceptions_handler.BrutescrapException('Could not find Microsoft Edge. Contact administrator.')
+                    exit(1)
